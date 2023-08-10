@@ -9,7 +9,8 @@ USER root
 ARG MATLAB_RELEASE
 ENV MATLAB_RELEASE=${MATLAB_RELEASE} MATLAB_DESTINATION=/opt/mathworks/matlab/${MATLAB_RELEASE}
 
-# install MATLAB, PCT and Stats and ML. Anything else required will be installed by entrpooint by setting MATLAB_REQUIRED_PRODUCTS
+# Install MATLAB, Parallel Computing Toolbox and Statistics and Machine Learning Toolbox.
+# Any additional products required will be installed by the entrypoint
 RUN wget -q https://www.mathworks.com/mpm/glnxa64/mpm &&\
     chmod +x ./mpm &&\
     ./mpm install --no-gpu --release=${MATLAB_RELEASE}  --destination=${MATLAB_DESTINATION} --products MATLAB Parallel_Computing_Toolbox Statistics_and_Machine_Learning_Toolbox &&\
