@@ -1,0 +1,4 @@
+{
+    "sagemaker_program": "train_decision_tree",
+    "sagemaker_submit_directory": "/submit_dir"
+}

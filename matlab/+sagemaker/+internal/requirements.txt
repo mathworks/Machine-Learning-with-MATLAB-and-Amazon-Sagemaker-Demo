@@ -1,0 +1,3 @@
+# Copyright 2023 The MathWorks, Inc. 
+sagemaker==2.140.1
+docker==6.0.1
