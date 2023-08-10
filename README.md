@@ -42,12 +42,12 @@ Put your MATLAB batch licensing token in `training.env`
 
 ### 1. Create a MATLAB training image 
 
-This container is based on `mathworks/matlab` with the following changes/additions:
+This container is based on `mathworks/matlab-deps` with the following changes/additions:
 1. Runs as root (as Amazon SageMaker requires this to have access to mounted volumes)
-2. Adds Statistics and Machine Learning Toolbox and Parallel Computing Toolbox.
+2. Install MATLAB, Statistics and Machine Learning Toolbox, and Parallel Computing Toolbox.
 3. Adds `matlab-batch` 
-4. Adds MATLAB code from this repository that glues the Amazon SageMaker training environment to the user supplied MATLAB.
-5. Provides entrypoint that installs other required products and then calls `matlab-batch`
+4. Adds MATLAB code from this repository that glues the Amazon SageMaker training environment to the user supplied MATLAB code.
+5. Provides entrypoint that installs any other required products and then calls `matlab-batch` to run the training code.
 
 To build and push the training image
 ````shell
@@ -86,7 +86,7 @@ In MATLAB:
 3. Override any of `decode_input`, `load_model`, `predict` or `encode_output` methods. 
   * `decode_input`: default implementation supports input data of type `text/csv` data and returns the data as a MATLAB `table`
   * `encode_output`: default implementation supports encodine a MATLAB table of output data with type `text/csv` 
-  * `load_model`: default implementation loads a variable called `model` from a MAT file called `model.mat` from the SageMaker `model` folder (typically `/  opt/ml/model)`)
+  * `load_model`: default implementation loads a variable called `model` from a MAT file called `model.mat` from the SageMaker `model` folder (typically `/opt/ml/model)`)
   * `predict`: default implementation attempts to evaluate the loaded model `output = model(inputData)`.
 
 Copyright 2023 The MathWorks, Inc.
