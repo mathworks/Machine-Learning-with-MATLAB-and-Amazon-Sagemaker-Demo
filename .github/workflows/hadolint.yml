@@ -13,9 +13,10 @@ on:
     branches: [ "main", "richardthe3rd/**" ]
   pull_request:
     # The branches below must be a subset of the branches above
-    branches: [ "main" ]
+    branches: [ "main" ]  
   schedule:
     - cron: '43 21 * * 1'
+  workflow_call: 
 
 permissions:
   contents: read
