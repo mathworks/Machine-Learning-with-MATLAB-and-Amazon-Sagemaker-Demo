@@ -3,11 +3,11 @@ ARG MATLAB_RELEASE=r2023a
 
 FROM docker.io/mathworks/matlab-deps:${MATLAB_RELEASE}
 
-# SageMaker expects container runs as root
-USER root
-
 ARG MATLAB_RELEASE
 ENV MATLAB_RELEASE=${MATLAB_RELEASE} MATLAB_DESTINATION=/opt/mathworks/matlab/${MATLAB_RELEASE}
+
+# DL4006: Set the SHELL option -o pipefail before RUN with a pipe in
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 # Install MATLAB, Parallel Computing Toolbox and Statistics and Machine Learning Toolbox.
 # Any additional products required will be installed by the entrypoint
