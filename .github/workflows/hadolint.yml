@@ -1,0 +1,57 @@
+# This workflow uses actions that are not certified by GitHub.
+# They are provided by a third-party and are governed by
+# separate terms of service, privacy policy, and support
+# documentation.
+# hadoint is a Dockerfile linter written in Haskell
+# that helps you build best practice Docker images.
+# More details at https://github.com/hadolint/hadolint
+
+name: Hadolint
+
+on:
+  push:
+    branches: [ "main", "richardthe3rd/**" ]
+  pull_request:
+    # The branches below must be a subset of the branches above
+    branches: [ "main" ]  
+  schedule:
+    - cron: '43 21 * * 1'
+  workflow_call: 
+
+permissions:
+  contents: read
+
+jobs:
+  hadolint:
+    name: Run hadolint scanning
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read # for actions/checkout to fetch code
+      pull-requests: write # to add issue to PR
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Run hadolint
+        uses: hadolint/hadolint-action@v3.1.0
+        with:
+          dockerfile: ./docker/Dockerfile
+
+      - name: Update Pull Request
+        uses: actions/github-script@v6
+        if: github.event_name == 'pull_request' && failure()
+        with:
+          script: |
+            const output = `
+            #### Hadolint: \`${{ steps.hadolint.outcome }}\`
+            \`\`\`
+            ${process.env.HADOLINT_RESULTS}
+            \`\`\`
+            `;
+      
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: output
+            })    
