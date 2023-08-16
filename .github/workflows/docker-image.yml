@@ -1,0 +1,26 @@
+name: Docker Training Image
+
+on:
+  push:
+    branches: [ "main", "richardthe3rd/**" ]
+    paths: 
+      - '.github/workflows/docker-image.yml'
+      - './docker/**'
+  pull_request:
+    branches: [ "main" ]  
+    paths: 
+      - '.github/workflows/docker-image.yml'
+      - './docker/**'
+
+jobs:
+
+  build:
+    strategy:
+      matrix:
+        matlab_release: ['r2023a']
+        
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Build the Docker image
+      run: docker build ./docker --file ./docker/Dockerfile --build-arg MATLAB_RELEASE=${{ matrix.matlab_release }} --tag matlab-sagemaker-training:${{ matrix.matlab_release }}-$(date +%s)
