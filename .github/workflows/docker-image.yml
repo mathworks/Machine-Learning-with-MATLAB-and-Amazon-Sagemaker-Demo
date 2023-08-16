@@ -23,4 +23,4 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Build the Docker image
-      run: docker build docker --file Dockerfile --build-arg MATLAB_RELEASE=${{ matrix.matlab_release }} --tag matlab-sagemaker-training:${{ matrix.matlab_release }}-$(date +%s)
+      run: docker build ./docker --file ./docker/Dockerfile --build-arg MATLAB_RELEASE=${{ matrix.matlab_release }} --tag matlab-sagemaker-training:${{ matrix.matlab_release }}-$(date +%s)
