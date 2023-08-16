@@ -2,9 +2,13 @@ name: MATLAB Code Issues Check
 on:
   push:
     branches: [ "main", "richardthe3rd/**" ]
+    paths:
+     - '**.m'
   pull_request:
     # The branches below must be a subset of the branches above
     branches: [ "main" ]  
+    paths:
+     - '**.m'
   schedule:
     - cron: '43 21 * * 1'
   workflow_call: 
