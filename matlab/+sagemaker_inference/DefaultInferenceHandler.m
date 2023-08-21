@@ -5,7 +5,7 @@ classdef DefaultInferenceHandler
     methods
         function inputDataTable = decode_input(obj, inputData, contentType)
             arguments
-                obj sagemaker_inference.DefaultInferenceHandler
+                obj sagemaker_inference.DefaultInferenceHandler %#ok<INUSA>
                 inputData string
                 contentType string = "text/csv"
             end
@@ -18,7 +18,7 @@ classdef DefaultInferenceHandler
         end
         function model = load_model(obj, modelFolder)
             arguments
-                obj sagemaker_inference.DefaultInferenceHandler
+                obj sagemaker_inference.DefaultInferenceHandler %#ok<INUSA>
                 modelFolder string
             end
             loaded = load(fullfile(modelFolder, "model"), "model");
@@ -26,15 +26,15 @@ classdef DefaultInferenceHandler
         end
         function prediction = predict(obj, inputData, model)
             arguments
-                obj sagemaker_inference.DefaultInferenceHandler
+                obj sagemaker_inference.DefaultInferenceHandler %#ok<INUSA>
                 inputData table
                 model
             end
-            prediction = model(inputData)
+            prediction = model(inputData);
         end
         function outputData = encode_output(obj, prediction, accept)
             arguments
-                obj sagemaker_inference.DefaultInferenceHandler
+                obj sagemaker_inference.DefaultInferenceHandler %#ok<INUSA>
                 prediction table
                 accept string
             end
@@ -48,6 +48,10 @@ classdef DefaultInferenceHandler
     end
     methods
         function response = ping(obj, request)
+            arguments
+                obj sagemaker_inference.DefaultInferenceHandler %#ok<INUSA>
+                request struct %#ok<INUSA>
+            end
             response = struct('ApiVersion', [1 0 0], ...
                 'HttpCode', 200, ...
                 'HttpMessage', 'OK', ...
@@ -55,7 +59,10 @@ classdef DefaultInferenceHandler
         end
         
         function response = invocations(obj, request)
-            request
+            arguments
+                obj sagemaker_inference.DefaultInferenceHandler
+                request struct
+            end
             
             headers = request.Headers.';
             headers = dictionary(headers{:});
