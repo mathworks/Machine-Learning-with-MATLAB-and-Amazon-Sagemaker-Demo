@@ -44,7 +44,7 @@ classdef MATLABModel
             disp("Tagging and pushing " + imageName);
             repoUri = sagemaker.internal.tagAndPushToECR(obj.Session, imageName);
 
-            disp("Creating sagemaker model for " + repoUri)
+            disp("Creating sagemaker model")
             obj.SageMakerModel = py.sagemaker.model.Model(...
                 repoUri, modelData, ...
                 role=role, sagemaker_session=session.SageMakerSession);
