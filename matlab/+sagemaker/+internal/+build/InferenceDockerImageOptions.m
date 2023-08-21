@@ -26,8 +26,16 @@ classdef InferenceDockerImageOptions
             opts.MicroserviceDockerImageOptions = compiler.package.MicroserviceDockerImageOptions(ImageName=args.ImageName);
 
             dockerContext = fullfile(buildResults.Options.OutputDir, "sagemaker");
-            delete(fullfile(dockerContext, 'Dockerfile.sagemaker'));
-            delete(fullfile(dockerContext, 'entrypoint.sh'));
+
+            dockerfileSagemaker = fullfile(dockerContext, 'Dockerfile.sagemaker');
+            extrypoint = fullfile(dockerContext, 'entrypoint.sh');
+            
+            if exist(dockerfileSagemaker, 'file')==2
+                delete(dockerfileSagemaker);
+            end
+            if exist(extrypoint, 'file')==2
+                delete(extrypoint)
+            end
 
             opts.MicroserviceDockerImageOptions.DockerContext = dockerContext;
             
