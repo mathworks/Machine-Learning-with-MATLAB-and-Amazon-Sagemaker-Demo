@@ -8,8 +8,9 @@ classdef Session
     end
 
     properties(Dependent)
-        DefaultBucket
+        AccountID
         BotoRegionName
+        DefaultBucket
     end
     
     methods
@@ -20,11 +21,16 @@ classdef Session
             obj.SageMakerSession = py.sagemaker.session.Session(boto_session=args.botoSession);
         end
         
+        function botoRegionName = get.BotoRegionName(obj)
+            botoRegionName = string(obj.SageMakerSession.boto_region_name);
+        end
+
         function defaultBucket = get.DefaultBucket(obj)
             defaultBucket = string(obj.SageMakerSession.default_bucket());
         end
-        function botoRegionName = get.BotoRegionName(obj)
-            botoRegionName = string(obj.SageMakerSession.boto_region_name);
+        
+        function accountid = get.AccountID(obj)
+            accountid = string(obj.SageMakerSession.account_id());
         end
     end
 end

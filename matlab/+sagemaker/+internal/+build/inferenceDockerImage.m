@@ -22,21 +22,21 @@ function inferenceDockerImage(buildResults, args)
     e = fopen(fullfile(args.Options.DockerContext, "entrypoint.sh"), "wt+");
     ec = onCleanup(@()fclose(e));
   
-    for tline=DockerfileLines.' 
-        if tline.startsWith("ENTRYPOINT")
+    for DockerFileLine=DockerfileLines.' 
+        if DockerFileLine.startsWith("ENTRYPOINT")
             % Write entrypoint.sh that will call the original ENTRYPOINT
-            entrypoint = string(jsondecode(tline.extractAfter("ENTRYPOINT")));
+            entrypoint = string(jsondecode(DockerFileLine.extractAfter("ENTRYPOINT")));
             fprintf(e, "#!/bin/bash\n");
             fprintf(e, "set -euo pipefail\n");
             fprintf(e, "%s %s\n", join(entrypoint), "--http 8080 --log-severity trace"); % TODO: Use SAGEMAKER_BIND_TO_PORT if set
         
-            tline = 'ENTRYPOINT /etc/matlabruntime/helpers/entrypoint.sh';
+            DockerFileLine = 'ENTRYPOINT /etc/matlabruntime/helpers/entrypoint.sh'; %#ok<FXSET>
   
-            fprintf(d, "%s\n", tline);
-        elseif tline.startsWith("USER")
+            fprintf(d, "%s\n", DockerFileLine);
+        elseif DockerFileLine.startsWith("USER")
             % do nothing - we want to stay as ROOT in this case
         else
-            fprintf(d, "%s\n", tline);
+            fprintf(d, "%s\n", DockerFileLine);
         end
     end  
 

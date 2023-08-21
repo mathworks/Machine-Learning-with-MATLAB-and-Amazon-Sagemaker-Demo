@@ -19,14 +19,13 @@ function repositoryUri = tagAndPushToECR(session, imageName)
     repositoryUri = string(repository{'repositoryUri'});
 
     dockerClient = py.docker.from_env();
-    disp("Tagging " + imageName + " as " + repositoryUri)
+    disp("Tagging " + imageName)
     ok = dockerClient.images.get(imageName+":latest").tag(repositoryUri+":latest");
     assert(ok, "Tagging failed")
 
-    disp("Pushing image to " + repositoryUri)
+    disp("Pushing image to ecr")
     [username, password] = get_authorization_token(ecr);
-    resp = dockerClient.api.push(repositoryUri, "latest", auth_config=struct(username=username, password=password));
-    disp(resp)    
+    dockerClient.api.push(repositoryUri, "latest", auth_config=struct(username=username, password=password));
 end
 
 function [username, password] = get_authorization_token(ecr)

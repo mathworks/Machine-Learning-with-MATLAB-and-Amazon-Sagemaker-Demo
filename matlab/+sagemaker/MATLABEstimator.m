@@ -66,7 +66,7 @@ classdef MATLABEstimator
                 sourceLocation = "s3://" + obj.Session.DefaultBucket + "/" + jobName + "/source/" + jobName + ".mltbx";
                 makeFolderOrError(fileparts(sourceLocation))                
                 movefile(toolboxFile, sourceLocation);
-                disp("Moved mltbx to " + sourceLocation);
+                disp("Moved mltbx to default bucket");
 
                 args.HyperParameters.sagemaker_submit_directory = sourceLocation;
 
