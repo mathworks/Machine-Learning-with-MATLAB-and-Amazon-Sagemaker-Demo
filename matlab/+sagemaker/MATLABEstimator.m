@@ -9,7 +9,7 @@ classdef MATLABEstimator
     end
     properties(Dependent)
         ModelData string
-        LatestTrainingJobName string
+        LatestTrainingJob sagemaker.TrainingJob
     end
     methods(Static)
         function est = attach(jobName, session)
@@ -25,8 +25,8 @@ classdef MATLABEstimator
         function loc = get.ModelData(obj)
             loc = string(obj.SageMakerEstimator.model_data);
         end
-        function name = get.LatestTrainingJobName(obj)
-            name = string(obj.SageMakerEstimator.latest_training_job.job_name);
+        function trainngJob = get.LatestTrainingJob(obj)
+            trainngJob = sagemaker.TrainingJob(obj.SageMakerEstimator.latest_training_job);
         end
         function obj = MATLABEstimator(role, args)
             arguments
