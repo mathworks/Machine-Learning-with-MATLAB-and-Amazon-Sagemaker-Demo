@@ -1,5 +1,8 @@
 classdef TrainingJob
-    
+% TrainingJob
+
+% Copyright 2023 The MathWorks, Inc.
+
     properties(SetAccess=private, Hidden)
         SageMakerTrainingJob
     end
