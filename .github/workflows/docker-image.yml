@@ -23,4 +23,6 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Build the Docker image
-      run: docker build ./docker --file ./docker/Dockerfile --build-arg MATLAB_RELEASE=${{ matrix.matlab_release }} --tag matlab-sagemaker-training:${{ matrix.matlab_release }}-$(date +%s)
+      run: |
+        docker build ./docker --file ./docker/Dockerfile --build-arg MATLAB_RELEASE=${{ matrix.matlab_release }} --tag matlab-sagemaker-training-${{ matrix.matlab_release }}
+        docker run --rm $(pwd)/docker/test/matlab/:/submit_dir -v $(pwd)/docker/test/opt/ml:/opt/ml -e MATHWORKS_ACCOUNT -e MATHWORKS_TOKEN -e MATLAB_REQUIRED_PRODUCTS=Optimization_Toolbox matlab-sagemaker-training-${{ matrix.matlab_release }} train
