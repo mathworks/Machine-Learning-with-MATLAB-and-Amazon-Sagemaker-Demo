@@ -1,7 +1,7 @@
-# Creates a SageMaker training image using MATLAB
+# Create a SageMaker training image that uses MATLAB
 
 ## Build the training image
-This creates matlab-sagemaker-training-$(MATLAB_RELEASE)
+This creates `matlab-sagemaker-training-$(MATLAB_RELEASE)`
 ````shell
 make
 ````
