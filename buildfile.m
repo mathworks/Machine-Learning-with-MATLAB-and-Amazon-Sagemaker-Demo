@@ -22,7 +22,7 @@ mlxFiles = ctx.Task.Inputs.paths;
 mdFiles = ctx.Task.Outputs(1).paths;
 for idx = 1:numel(mlxFiles) 
     disp("Building markdown file from " + mlxFiles(idx))
-    export(mlxFiles(idx), mdFiles(idx), Run=false, EmbedImages=false);
+    export(mlxFiles(idx), mdFiles(idx), Run=false, EmbedImages=false, Caching=false);
 end
 
 writelines(ctx.Task.Outputs.paths,"mdOutputs.txt");
@@ -35,6 +35,6 @@ mlxFiles = ctx.Task.Inputs.paths;
 ipynbFiles = ctx.Task.Outputs.paths;
 for idx = 1:numel(mlxFiles) 
     disp("Building jupyter notebook from " + mlxFiles(idx))
-    export(mlxFiles(idx), ipynbFiles(idx), Run=false);
+    export(mlxFiles(idx), ipynbFiles(idx), Run=false, Caching=false);
 end
 end
