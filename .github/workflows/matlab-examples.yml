@@ -1,0 +1,58 @@
+name: MATLAB Code Issues Check
+on:
+  push:
+    branches: [ "main", "richardthe3rd/**" ]
+    paths:
+     - '**.m'
+  pull_request:
+    # The branches below must be a subset of the branches above
+    branches: [ "main" ]  
+    paths:
+     - '**.m'
+  schedule:
+    - cron: '43 21 * * 1'
+  workflow_call: 
+permissions:
+  contents: read  
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    permissions:
+      # Give the default GITHUB_TOKEN write permission to commit and push the
+      # added or changed files to the repository.
+      contents: write
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v3
+
+      - name: Cache MATLAB
+        id: cache-matlab
+        uses: actions/cache@v3
+        with:
+          path: ${{ runner.tool_cache }}/MATLAB
+          key: r2023b
+      
+      # Sets up MATLAB on the GitHub Actions runner
+      - name: Setup MATLAB
+        uses: matlab-actions/setup-matlab@v2
+
+      - name: Start display server
+        run: |
+          sudo apt-get install xvfb
+          Xvfb :99 &
+          echo "DISPLAY=:99" >> $GITHUB_ENV
+    
+      - name: Produce MD from MLX
+        uses: matlab-actions/run-build@v2
+        with:
+          tasks: markdown
+                     
+      - name: Commit markdown
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          file_pattern: '*.md'
