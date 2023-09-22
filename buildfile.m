@@ -20,7 +20,7 @@ function markdownTask(ctx)
 mlxFiles = ctx.Task.Inputs.paths;
 mdFiles = ctx.Task.Outputs(1).paths;
 for idx = 1:numel(mlxFiles) 
-    disp("Building markdown file from " + mlxFiles(idx))
+    disp("Building markdown file " + mdFiles(idx) + " from " + mlxFiles(idx))
     export(mlxFiles(idx), mdFiles(idx), Run=false, Caching=false);
 end
 
