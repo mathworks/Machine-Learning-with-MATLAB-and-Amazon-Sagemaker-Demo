@@ -52,7 +52,6 @@ jobs:
       - name: Produce MD from MLX
         uses: matlab-actions/run-build@v1
         with:
-          startup-options: -sd examples
           tasks: markdown
                      
       - name: Commit markdown
