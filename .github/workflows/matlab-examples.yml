@@ -1,4 +1,4 @@
-name: MATLAB Code Issues Check
+name: MATLAB Examples
 on:
   push:
     branches: [ "main", "richardthe3rd/**" ]
