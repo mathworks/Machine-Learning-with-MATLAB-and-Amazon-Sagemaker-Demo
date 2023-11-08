@@ -2,6 +2,8 @@
 
 This repository demonstrates an approach to using [Amazon SageMaker](https://aws.amazon.com/sagemaker/)'s support for bring-your-own-algorithms and frameworks to train and deploy MATLAB machine learning models.
 
+For more information see [Running MATLAB Machine Learning Jobs in Amazon SageMaker](https://www.mathworks.com/videos/running-matlab-machine-learning-jobs-in-amazon-sagemaker-1683546737136.html) webinar from [MATLAB Expo 2023](https://www.matlabexpo.com/online/2023.html).
+
 ## Prerequistes
 * An Amazon Web Services™ (AWS) account.
 * A Linux&reg; computer with 
